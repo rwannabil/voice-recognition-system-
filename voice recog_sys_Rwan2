@@ -1,0 +1,39 @@
+import speech_recognition as sr
+
+recognizer = sr.Recognizer()
+
+print("=== Voice Assistant Started ===")
+print("Speak something... (say 'exit' to quit)")
+
+while True:
+    with sr.Microphone() as source:
+        print("Listening...")
+        audio = recognizer.listen(source)
+
+    try:
+        text = recognizer.recognize_google(audio).lower()
+        print("You said:", text)
+
+
+        if "hello" in text or "hi" in text:
+            print("Assistant: Hello! How are you?")
+        elif "how are you" in text:
+            print("Assistant: I'm fine, thank you!")
+        elif "your name" in text:
+            print("Assistant: I'm your Python assistant.")
+        elif "time" in text:
+            from datetime import datetime
+            print("Assistant: Current time is", datetime.now().strftime("%H:%M:%S"))
+        elif "joke" in text:
+            print("Assistant: Why did the computer go to the doctor? It caught a virus!")
+        elif "weather" in text:
+            print("Assistant: I can't check weather yet, but hope it's nice outside!")
+        elif text in ["exit", "stop", "quit"]:
+            print("Assistant: Goodbye!")
+            break
+        else:
+            print("Assistant: I didn't understand that.")
+
+    except sr.UnknownValueError:
+        print("Assistant: I didn't understand, say it again.")
+   
